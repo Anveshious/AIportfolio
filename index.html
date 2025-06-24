@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anvesha's Portfolio</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+      <h1 class="logo">Welcome!</h1>
+        <div class="dark-mode-toggle">
+          <span id="themeIcon">🌙</span>
+          <label class="switch">
+            <input type="checkbox" id="darkToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+  <header>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero">
+         <div class="hero-content">
+            <img src="profile.jpg" alt="Anvesha Profile" class="profile-pic" />
+             <h2>Hello, I'm Anvesha</h2>
+             <p>A passionate electronics and tech enthusiast.</p>
+        </div>
+    </section>
+
+
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hi, I’m Anvesha, an aspiring electronics engineer with a passion for building intelligent systems that bridge the gap between hardware and AI. I believe technology should feel magical and I’m working towards making that magic real through IoT, and machine learning.
+From crafting circuits to designing user interfaces, I love blending logic with creativity. Whether it's automating real-world problems or exploring the future of smart devices, I'm always learning, experimenting, and dreaming big.
+
+<p>Maybe I'm build with one line of code and one circuit at a time.</p></p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+        <div class="project-grid">
+          <div class="project-card">
+            <img src="aquasense.jpg" alt="Project 1" />
+            <h3>AquaSense</h3>
+            <p>AquaSense began as a low-cost, portable, IoT-enabled water quality assessor. With roots in innovation and urgency, it aims to make real-time, in-situ and remote water monitoring both accessible and affordable.</p>
+          <div class="card-buttons">
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7323726880145092609/" target="_blank">About AquaSense</a>
+          </div>
+          </div>
+
+          <div class="project-card">
+            <img src="Picture1.png" alt="Project 2" />
+            <h3>AquaVive</h3>
+            <p>An intuitive platform that bridges the gap between households, recyclers, and local authorities to ensure efficient waste collection, sorting, and recycling.</p>
+          <div class="card-buttons">
+            <a href="https://yourprojectlive.com" target="_blank">About AquaVive</a>
+          </div>
+          </div>
+
+          <div class="project-card">
+            <img src="project3.png" alt="Project 3" />
+            <h3>QuickHelp</h3>
+            <p>An ongoing project to solve all your daily-life problems</p>
+          <div class="card-buttons">
+            <div class="btn-placeholder">Coming Soon..</div>
+          </div>
+          </div>
+  </div>
+</section>
+
+
+    <section id="contact">
+      <h2>Contact</h2>
+        <p>Let’s connect!</p>
+          <div class="social-buttons">
+            <a href="https://www.linkedin.com/in/anvesha-kashyap-a66a862b8/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Anveshious" target="_blank">GitHub</a>
+            <a href="mailto:anvesha105@gmail.com">Email</a>
+          </div>
+      </section>
+
+  </main>
+        <div class="chat-bubble" onclick="toggleChat()">
+            💬 Have a chat
+        </div>
+
+        <div id="chatOverlay" class="chat-overlay hidden">
+          <div class="chat-header">
+            <div class="chat-header-left">
+              <img src="bot.png" alt="Bot Avatar" class="chat-avatar" />
+              <span>AI Assistant</span>
+            </div>
+            <button onclick="toggleChat()">×</button>
+          </div>
+          <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type a message..." onkeydown="handleKey(event)" />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+  </div>
+</div>
+
+  <div class="chat-bubble" onclick="toggleChat()">
+    💬 Have a chat
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+const myFullName = "Anvesha";
+const myDescription = "I'm an electronics engineering student passionate about AI, ML, and embedded systems.";
+const GEMINI_API_KEY = "AIzaSyBMLbT3eQMbc5eyf6-5WotP68xu5X9-3q8";
+
+const chatMessages = document.getElementById("chatMessages");
+
+function toggleChat() {
+  const chatOverlay = document.getElementById("chatOverlay");
+  chatOverlay.classList.toggle("hidden");
+
+  const hasInit = [...chatMessages.children].some(msg => msg.textContent.includes("Hi, I am"));
+  if (!hasInit) {
+    appendMessage("bot", `Hi, I am ${myFullName}, what do you want to know about me?`);
+  }
+}
+
+function handleKey(e) {
+  if (e.key === "Enter") sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  appendMessage("user", msg);
+  input.value = "";
+  getGeminiResponse(msg);
+}
+
+function appendMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.className = `chat-message ${sender}`;
+  msg.textContent = text;
+  chatMessages.appendChild(msg);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function getGeminiResponse(message) {
+  const payload = {
+    contents: [{
+      parts: [{
+        text: `User_message: ${message}. Reply naturally in short, friendly sentences. If needed, base your response on: ${myDescription}.`
+      }]
+    }]
+  };
+
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn’t understand that.";
+    appendMessage("bot", reply);
+  } catch (err) {
+    appendMessage("bot", "Oops! Something went wrong.");
+    console.error(err);
+  }
+}
+const toggle = document.getElementById("darkToggle");
+const themeIcon = document.getElementById("themeIcon");
+
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  toggle.checked = true;
+  themeIcon.textContent = "☀️";
+} else {
+  document.body.classList.remove("dark");
+  themeIcon.textContent = "🌙";
+}
+
+toggle.addEventListener("change", () => {
+  document.body.classList.toggle("dark");
+  const theme = document.body.classList.contains("dark") ? "dark" : "light";
+  localStorage.setItem("theme", theme);
+  themeIcon.textContent = theme === "dark" ? "☀️" : "🌙";
+});
+</script>
+
+<script>
+  const chatToggle = document.querySelector(".chat-bubble");
+  const chatOverlay = document.querySelector(".chat-overlay");
+  const chatClose = document.querySelector(".chat-close-btn");
+
+  chatToggle.addEventListener("click", () => {
+    chatOverlay.classList.toggle("hidden");
+  });
+
+  chatClose.addEventListener("click", () => {
+    chatOverlay.classList.add("hidden");
+  });
+</script>
