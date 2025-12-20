@@ -153,6 +153,14 @@ if (!document.getElementById('custom-cursor')) {
     cursor.style.top = e.clientY + 'px';
     cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     
+    // Create smoke particle
+    const smoke = document.createElement('div');
+    smoke.className = 'smoke';
+    smoke.style.left = (e.clientX - 5) + 'px'; // offset a bit
+    smoke.style.top = (e.clientY - 5) + 'px';
+    document.body.appendChild(smoke);
+    setTimeout(() => smoke.remove(), 1000); // remove after animation
+    
     prevX = e.clientX;
     prevY = e.clientY;
   });
