@@ -37,6 +37,7 @@ body {
   color: var(--text-light);
   line-height: 1.6;
   transition: background 0.4s, color 0.4s;
+  cursor: none;
 }
 
 body.dark {
@@ -494,3 +495,22 @@ body.dark .chat-overlay {
 .hidden {
   display: none;
 }
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  background-image: url('f1-car.png');
+  background-size: cover;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease-out;
+}
+
+* {
+  cursor: url('f1-car.png'), auto;
+}
+
