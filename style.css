@@ -115,8 +115,8 @@ section {
 .switch {
   position: relative;
   display: inline-block;
-  width: 44px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
 }
 
 .switch input {
@@ -132,27 +132,32 @@ section {
   right: 0; bottom: 0;
   background-color: #ccc;
   transition: .4s;
-  border-radius: 24px;
+  border-radius: 10px;
 }
 
-.slider:before {
+.slider::before {
   position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
+  content: "☀️";
+  height: 30px;
+  width: 30px;
   left: 3px;
   bottom: 3px;
   background-color: white;
   transition: .4s;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
 }
 
 input:checked + .slider {
   background-color: var(--chat-bg);
 }
 
-input:checked + .slider:before {
-  transform: translateX(20px);
+input:checked + .slider::before {
+  transform: translateX(0px);
+  content: "🌙";
 }
 
 /* === CHAT STYLING === */

@@ -10,7 +10,6 @@
   <div class="container">
       <h1 class="logo">Welcome!</h1>
         <div class="dark-mode-toggle">
-          <span id="themeIcon">🌙</span>
           <label class="switch">
             <input type="checkbox" id="darkToggle" />
             <span class="slider"></span>
@@ -183,22 +182,18 @@ async function getGeminiResponse(message) {
   }
 }
 const toggle = document.getElementById("darkToggle");
-const themeIcon = document.getElementById("themeIcon");
 
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark");
   toggle.checked = true;
-  themeIcon.textContent = "☀️";
 } else {
   document.body.classList.remove("dark");
-  themeIcon.textContent = "🌙";
 }
 
 toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark");
   const theme = document.body.classList.contains("dark") ? "dark" : "light";
   localStorage.setItem("theme", theme);
-  themeIcon.textContent = theme === "dark" ? "☀️" : "🌙";
 });
 </script>
 

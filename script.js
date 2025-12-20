@@ -20,21 +20,18 @@ const userInput = document.getElementById("userInput");
 
 // === Dark Mode Toggle ===
 const toggle = document.getElementById("darkToggle");
-const themeIcon = document.getElementById("themeIcon");
 
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark");
   toggle.checked = true;
-  themeIcon.textContent = "☀️";
 } else {
-  themeIcon.textContent = "🌙";
+  toggle.checked = false;
 }
 
 toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark");
   const theme = document.body.classList.contains("dark") ? "dark" : "light";
   localStorage.setItem("theme", theme);
-  themeIcon.textContent = theme === "dark" ? "☀️" : "🌙";
 });
 
 // === Chat Logic ===
