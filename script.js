@@ -166,3 +166,13 @@ if (!document.getElementById('custom-cursor')) {
   });
 }
 
+// Animate skill bars on load
+const bars = document.querySelectorAll('.bar');
+bars.forEach(bar => {
+  const targetWidth = bar.style.width;
+  bar.style.width = '0%';
+  setTimeout(() => {
+    bar.style.width = targetWidth;
+  }, 500);
+});
+
