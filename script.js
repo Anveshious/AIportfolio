@@ -134,10 +134,27 @@ function removeTyping() {
   const typing = document.getElementById("typingIndicator");
   if (typing) typing.remove();
 }
-showTyping();
 
-const reply = await getGeminiResponse(userMessage);
+// Custom live cursor like Formula 1 car
+if (!document.getElementById('custom-cursor')) {
+  let prevX = 0;
+  let prevY = 0;
 
-removeTyping();
-appendMessage("bot", reply);
+  const cursor = document.createElement('div');
+  cursor.id = 'custom-cursor';
+  document.body.appendChild(cursor);
+
+  document.addEventListener('mousemove', (e) => {
+    const dx = e.clientX - prevX;
+    const dy = e.clientY - prevY;
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+    
+    prevX = e.clientX;
+    prevY = e.clientY;
+  });
+}
 
