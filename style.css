@@ -468,3 +468,12 @@ section {
   cursor: url('f1-car.png'), auto;
 }
 
+section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
