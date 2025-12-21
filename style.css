@@ -1,28 +1,18 @@
-/* === ROOT THEME VARIABLES (Consolidated) === */
+/* === ROOT THEME VARIABLES (Dark Teal Theme) === */
 :root {
-  --bg-light: #e0f2ef;
-  --bg-dark:  #021e1c;
-  --text-light: #1e1e1e;
-  --text-dark: #f5f5f5;
-  --card-bg-light: #ffffff;
-  --card-bg-dark: #1e1e1e;
-  --accent-color: #54b6af;
-  --accent-color-dark: #053534;
+  --bg-color: #021e1c;
+  --text-color: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --accent-color: #053534;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --link-hover: #00adb5;
-  --chat-bg: #00adb5;
-  --bubble-bg: #eee;
-  --user-msg: #00adb5;
-}
-
-body.dark {
-  --bg-color: var(--bg-dark);
-  --text-color: var(--text-dark);
   --header-bg: #1f1f1f;
   --chat-bg: #333;
   --bubble-bg: #333;
   --user-msg: #005f63;
 }
+
+
 
 /* === BASE STYLES === */
 * {
@@ -33,16 +23,11 @@ body.dark {
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-light);
-  color: var(--text-light);
+  background-color: var(--bg-color);
+  color: var(--text-color);
   line-height: 1.6;
   transition: background 0.4s, color 0.4s;
   cursor: none !important;
-}
-
-body.dark {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
 }
 
 header {
@@ -83,7 +68,7 @@ header {
 }
 
 #hero {
-  background: linear-gradient(to right, #00adb5, #006d77);
+  background: linear-gradient(to right, #021e1c, #053534);
   color: white;
   padding: 5rem 2rem;
   text-align: center;
@@ -100,66 +85,7 @@ section {
   text-align: center;
 }
 
-/* === DARK MODE TOGGLE === */
-.dark-mode-toggle {
-  position: fixed;
-  top: 50px;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.3rem;
-  z-index: 9999; /* super high so it doesn't interfere */
-}
 
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 10px;
-}
-
-.slider::before {
-  position: absolute;
-  content: "☀️";
-  height: 30px;
-  width: 30px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
-
-input:checked + .slider {
-  background-color: var(--chat-bg);
-}
-
-input:checked + .slider::before {
-  transform: translateX(0px);
-  content: "🌙";
-}
 
 /* === CHAT STYLING === */
 .chat-bubble {
@@ -187,7 +113,7 @@ input:checked + .slider::before {
   right: 25px;
   width: 300px;
   max-height: 500px;
-  background: var(--bg-light);
+  background: var(--bg-color);
   border-radius: 16px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
   display: flex;
@@ -197,10 +123,7 @@ input:checked + .slider::before {
   transition: all 0.3s ease;
 }
 
-body.dark .chat-overlay {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
+
 
 .chat-message.bot {
   background: var(--bubble-bg);
@@ -244,17 +167,12 @@ body.dark .chat-overlay {
 }
 
 .project-card {
-  background: var(--card-bg-light);
+  background: var(--card-bg);
   color: var(--text-color);
   border-radius: 12px;
   padding: 16px;
   box-shadow: var(--shadow);
   transition: transform 0.2s ease;
-}
-
-body.dark .project-card {
-  background-color: var(--card-bg-dark);
-  color: var(--text-dark);
 }
 
 .project-card:hover {
@@ -266,22 +184,14 @@ body.dark .project-card {
 
 .project-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(0, 119, 255, 0.2); /* soft blue glow */
-}
-
-body.dark .project-card:hover {
-  box-shadow: 0 0 20px rgba(0, 119, 255, 0.4); /* brighter in dark mode */
+  box-shadow: 0 0 20px rgba(5, 53, 52, 0.4); /* teal glow */
 }
 
 .project-card img {
   width: 100%;
   border-radius: 10px;
-  filter: brightness(100%);
-  transition: filter 0.3s;
-}
-
-body.dark .project-card img {
   filter: brightness(95%);
+  transition: filter 0.3s;
 }
 
 .card-buttons a {
@@ -298,7 +208,7 @@ body.dark .project-card img {
 }
 
 .card-buttons a:hover {
-  background: var(--accent-color-dark);
+  background: var(--accent-color);
 }
 
 .btn-placeholder {
@@ -329,8 +239,8 @@ body.dark .project-card img {
 }
 
 .social-buttons a:hover {
-  background: var(--accent-color-dark);
-  box-shadow: 0 0 12px rgba(88, 187, 194, 0.498);  /* Soft glow */
+  background: var(--accent-color);
+  box-shadow: 0 0 12px rgba(5, 53, 52, 0.5);  /* Dark teal glow */
   transform: translateY(-2px);
 }
 
@@ -367,12 +277,6 @@ body.dark .project-card img {
     width: 90%;
     bottom: 90px;
   }
-  .dark-mode-toggle {
-  position: fixed !important;
-  top: 20px !important;
-  right: 20px !important;
-  z-index: 9999 !important;
-}
 
   .about-skills-wrapper {
     flex-direction: column;
@@ -382,27 +286,14 @@ body.dark .project-card img {
 
 }
 
-/* Header nav link color fix */
-body.dark .nav-links a {
-  color: var(--text-dark); /* or just white */
-}
-
-body.dark .nav-links a:hover {
-  color: var(--accent-color); /* highlight on hover */
-}
-
+/* Header nav link styles */
 .nav-links a {
-  transition: color 0.3s ease;
-}
-/* Default (light mode) nav link styles */
-.nav-links a {
-  color: var(--text-light);
+  color: var(--text-color);
   transition: color 0.3s ease;
 }
 
-/* Dark mode nav link styles */
-body.dark .nav-links a {
-  color: var(--text-dark);
+.nav-links a:hover {
+  color: var(--accent-color);
 }
 
 /* Chat overlay wrapper */
@@ -488,13 +379,8 @@ body.dark .nav-links a {
   font-weight: bold;
 }
 .chat-overlay {
-  background-color: var(--card-bg-light); /* light theme */
+  background-color: var(--card-bg);
   color: var(--text-color);
-}
-
-body.dark .chat-overlay {
-  background-color: var(--card-bg-dark); /* dark theme */
-  color: var(--text-dark);
 }
 
 .hidden {
@@ -577,7 +463,7 @@ body.dark .chat-overlay {
 
 .bar {
   height: 20px;
-  background: linear-gradient(to right, var(--accent-color), var(--accent-color-dark));
+  background: linear-gradient(to right, #54b6af, var(--accent-color));
   border-radius: 10px;
   position: relative;
   flex: 4;

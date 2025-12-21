@@ -1,4 +1,4 @@
-// === Gemini Chatbot Script with Dark Mode, Typing Animation, and Dynamic Description ===
+// === Gemini Chatbot Script with Typing Animation and Dynamic Description ===
 
 const myFullName = "Anvesha";
 const GEMINI_API_KEY = "AIzaSyBMLbT3eQMbc5eyf6-5WotP68xu5X9-3q8";
@@ -17,22 +17,6 @@ const myDescription = descriptions[Math.floor(Math.random() * descriptions.lengt
 const chatOverlay = document.getElementById("chatOverlay");
 const chatMessages = document.getElementById("chatMessages");
 const userInput = document.getElementById("userInput");
-
-// === Dark Mode Toggle ===
-const toggle = document.getElementById("darkToggle");
-
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  toggle.checked = true;
-} else {
-  toggle.checked = false;
-}
-
-toggle.addEventListener("change", () => {
-  document.body.classList.toggle("dark");
-  const theme = document.body.classList.contains("dark") ? "dark" : "light";
-  localStorage.setItem("theme", theme);
-});
 
 // === Chat Logic ===
 function toggleChat() {
