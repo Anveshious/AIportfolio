@@ -27,7 +27,7 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   transition: background 0.4s, color 0.4s;
-  cursor: none !important;
+ /* cursor: none !important;*/
 }
 
 header {
