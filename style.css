@@ -172,19 +172,12 @@ section {
   border-radius: 12px;
   padding: 16px;
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease;
-}
-
-.project-card:hover {
-  transform: scale(1.02);
-}
-.project-card {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(5, 53, 52, 0.4); /* teal glow */
+  transform: scale(1.02) translateY(-4px);
+  box-shadow: 0 0 30px rgba(5, 53, 52, 0.6), 0 10px 30px rgba(30, 235, 232, 0.3); /* enhanced teal glow with projection shadow */
 }
 
 .project-card img {
@@ -240,7 +233,7 @@ section {
 
 .social-buttons a:hover {
   background: var(--accent-color);
-  box-shadow: 0 0 12px rgba(5, 53, 52, 0.5);  /* Dark teal glow */
+  box-shadow: 0 0 12px rgba(14, 255, 251, 0.5);  /* Dark teal glow */
   transform: translateY(-2px);
 }
 
