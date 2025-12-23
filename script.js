@@ -161,12 +161,29 @@ bars.forEach(bar => {
 });
 
 const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-links a');
 const observer = new IntersectionObserver((entries) => {
+  let hasIntersecting = false;
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
+      hasIntersecting = true;
+
+      // Update active navigation link
+      const currentSectionId = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSectionId}`) {
+          link.classList.add('active');
+        }
+      });
     }
   });
+
+  // If no section is intersecting (at top of page), remove all active classes
+  if (!hasIntersecting) {
+    navLinks.forEach(link => link.classList.remove('active'));
+  }
 }, { threshold: 0.1 });
 sections.forEach(section => observer.observe(section));
 
