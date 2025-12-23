@@ -123,30 +123,52 @@ function removeTyping() {
 if (!document.getElementById('custom-cursor')) {
   let prevX = 0;
   let prevY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  let smokeCounter = 0;
 
   const cursor = document.createElement('div');
   cursor.id = 'custom-cursor';
   document.body.appendChild(cursor);
 
-  document.addEventListener('mousemove', (e) => {
-    const dx = e.clientX - prevX;
-    const dy = e.clientY - prevY;
+  function updateCursor() {
+    // Smooth interpolation (lerp) - adjust 0.1 for speed (lower = slower)
+    currentX += (targetX - currentX) * 0.1;
+    currentY += (targetY - currentY) * 0.1;
+
+    const dx = currentX - prevX;
+    const dy = currentY - prevY;
     const angle = Math.atan2(dy, dx) * 180 / Math.PI;
     
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+    cursor.style.left = currentX + 'px';
+    cursor.style.top = currentY + 'px';
     cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     
-    // Create smoke particle
-    const smoke = document.createElement('div');
-    smoke.className = 'smoke';
-    smoke.style.left = (e.clientX - 5) + 'px'; // offset a bit
-    smoke.style.top = (e.clientY - 5) + 'px';
-    document.body.appendChild(smoke);
-    setTimeout(() => smoke.remove(), 1000); // remove after animation
+    // Create smoke particle at car's position every few frames
+    smokeCounter++;
+    if (smokeCounter >= 5) { // Create smoke every 5 frames
+      const smoke = document.createElement('div');
+      smoke.className = 'smoke';
+      smoke.style.left = (currentX - 5) + 'px'; // offset a bit
+      smoke.style.top = (currentY - 5) + 'px';
+      document.body.appendChild(smoke);
+      setTimeout(() => smoke.remove(), 1000); // remove after animation
+      smokeCounter = 0;
+    }
     
-    prevX = e.clientX;
-    prevY = e.clientY;
+    prevX = currentX;
+    prevY = currentY;
+    
+    requestAnimationFrame(updateCursor);
+  }
+  
+  updateCursor(); // Start the animation loop
+
+  document.addEventListener('mousemove', (e) => {
+    targetX = e.clientX;
+    targetY = e.clientY;
   });
 }
 
