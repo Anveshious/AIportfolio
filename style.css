@@ -77,6 +77,7 @@ header {
 
 .nav-links a:hover {
   color: var(--link-hover);
+  text-shadow: 0 0 10px rgba(30, 90, 92, 0.8);
 }
 
 main {
@@ -235,7 +236,6 @@ section {
 }
 
 .project-card:hover {
-  transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-10px) scale(1.05);
   border-color: rgba(30, 90, 92, 0.8);
   box-shadow:
     0 20px 60px rgba(30, 90, 92, 0.3),
@@ -390,6 +390,7 @@ section {
 
 .nav-links a:hover {
   color: var(--accent-color);
+  text-shadow: 0 0 10px rgba(30, 90, 92, 0.8);
 }
 
 /* Chat overlay wrapper */

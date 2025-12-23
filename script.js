@@ -236,3 +236,18 @@ window.addEventListener('resize', () => { canvas.width = window.innerWidth; canv
 
 init();
 animate();
+
+// === Project Card Mouse Tilt Effect ===
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    let rect = card.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    let rotateY = (x / rect.width - 0.5) * 20;
+    let rotateX = (0.5 - y / rect.height) * 20;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateX(0) rotateY(0)';
+  });
+});
