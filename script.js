@@ -193,7 +193,7 @@ class Particle {
     if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
   }
   draw() {
-    ctx.fillStyle = '#00ffcc';
+    ctx.fillStyle = '#1e5a5c';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
@@ -220,7 +220,7 @@ function connectParticles() {
     for (let b = a; b < particles.length; b++) {
       let distance = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
       if (distance < 100) {
-        ctx.strokeStyle = `rgba(0, 255, 204, ${1 - distance / 100})`;
+        ctx.strokeStyle = `rgba(30, 90, 92, ${1 - distance / 100})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(particles[a].x, particles[a].y);

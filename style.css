@@ -1,15 +1,16 @@
-/* === ROOT THEME VARIABLES (Dark Teal Theme) === */
+/* === ROOT THEME VARIABLES (Subtle Dual Tone Theme) === */
 :root {
-  --bg-color: #021e1c;
+  --bg-color: #0a0f0e;
   --text-color: #f5f5f5;
-  --card-bg: #1e1e1e;
-  --accent-color: #053534;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --link-hover: #00adb5;
+  --card-bg: #1a1a1a;
+  --accent-color: #1e5a5c;
+  --secondary-accent: #7d1950;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --link-hover: #2a7a7d;
   --header-bg: #1f1f1f;
-  --chat-bg: #333;
+  --chat-bg: #2a2a2a;
   --bubble-bg: #333;
-  --user-msg: #005f63;
+  --user-msg: #4a2a3a;
 }
 
 #particle-canvas {
@@ -92,7 +93,7 @@ main {
 }
 
 #hero {
-  background: linear-gradient(to right, #021e1c, #053534);
+  background: linear-gradient(to right, #0a0f0e, #1e5a5c);
   color: white;
   padding: 3rem 1rem;
   text-align: center;
@@ -199,54 +200,119 @@ section {
 }
 
 .project-card {
-  background: var(--card-bg);
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(10px);
   color: var(--text-color);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: var(--shadow);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(30, 90, 92, 0.3);
+  box-shadow:
+    0 8px 32px rgba(30, 90, 92, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  animation: float 6s ease-in-out infinite;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg,
+    transparent,
+    rgba(30, 90, 92, 0.1),
+    rgba(30, 90, 92, 0.3),
+    transparent,
+    rgba(30, 90, 92, 0.1));
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .project-card:hover {
-  transform: scale(1.02) translateY(-4px);
-  box-shadow: 0 0 30px rgba(5, 53, 52, 0.6), 0 10px 30px rgba(30, 235, 232, 0.3); /* enhanced teal glow with projection shadow */
+  transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-10px) scale(1.05);
+  border-color: rgba(30, 90, 92, 0.8);
+  box-shadow:
+    0 20px 60px rgba(30, 90, 92, 0.3),
+    0 0 100px rgba(30, 90, 92, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+  animation: borderGlow 2s linear infinite;
 }
 
 .project-card img {
   width: 100%;
-  border-radius: 10px;
-  filter: brightness(95%);
-  transition: filter 0.3s;
+  border-radius: 12px;
+  filter: brightness(95%) contrast(1.1) saturate(1.2);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(30, 90, 92, 0.2);
+}
+
+.project-card:hover img {
+  filter: brightness(105%) contrast(1.1) saturate(1.2);
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(30, 90, 92, 0.3);
 }
 
 .card-buttons a {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-right: 10px;
-  background: var(--accent-color);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
+  background: rgba(30, 90, 92, 0.1);
+  color: #2a7a7d;
+  padding: 10px 16px;
+  border-radius: 25px;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.2s ease;
+  border: 1px solid rgba(30, 90, 92, 0.3);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-buttons a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(30, 90, 92, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .card-buttons a:hover {
-  background: var(--accent-color);
+  background: rgba(30, 90, 92, 0.2);
+  border-color: rgba(30, 90, 92, 0.8);
+  box-shadow: 0 0 20px rgba(30, 90, 92, 0.4);
+  transform: translateY(-2px);
+}
+
+.card-buttons a:hover::before {
+  left: 100%;
 }
 
 .btn-placeholder {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-right: 10px;
-  background: var(--accent-color);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
+  background: rgba(30, 90, 92, 0.1);
+  color: #2a7a7d;
+  padding: 10px 16px;
+  border-radius: 25px;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.2s ease;
+  border: 1px solid rgba(30, 90, 92, 0.3);
+  backdrop-filter: blur(5px);
 }
 
 
@@ -506,4 +572,26 @@ section {
 section.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* === HOLOGRAM CARD ANIMATIONS === */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes borderGlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
