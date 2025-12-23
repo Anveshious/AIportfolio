@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <canvas id="particle-canvas"></canvas>
   <div class="container">
       <h1 class="logo">Welcome!</h1>
 
@@ -21,20 +22,17 @@
       </nav>
     </div>
   </header>
-
-  <canvas id="particles" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
   
   <main>
-    <section id="hero">
+    <div class="hero-about-wrapper">
+      <section id="hero">
          <div class="hero-content">
             <img src="profile.jpg" alt="Anvesha Profile" class="profile-pic" />
              <h2>Hello, I'm Anvesha</h2>
              <p>A passionate electronics and tech enthusiast.</p>
         </div>
-    </section>
+      </section>
 
-
-    <div class="about-skills-wrapper">
       <section id="about">
         <h2>About Me</h2>
         <p>Hi, I’m Anvesha, an aspiring electronics engineer with a passion for building intelligent systems that bridge the gap between hardware and AI. I believe technology should feel magical and I’m working towards making that magic real through IoT, and machine learning.
@@ -42,7 +40,9 @@
 
   <p>Maybe I'm build with one line of code and one circuit at a time.</p></p>
       </section>
+    </div>
 
+    <div class="skills-wrapper">
       <section id="skills">
         <h2>Skills</h2>
         <div class="skills-container">
