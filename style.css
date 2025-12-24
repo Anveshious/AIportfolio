@@ -115,7 +115,6 @@ main {
   padding: 3rem 1rem;
   text-align: center;
   flex: 1;
-  margin-left: rem; /* Move hero a little left */
 }
 
 .hero-content h2 {
