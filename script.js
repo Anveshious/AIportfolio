@@ -1,55 +1,54 @@
-// === Gemini Chatbot Script with Typing Animation and Dynamic Description ===
-
-const myFullName = "Anvesha";
-const GEMINI_API_KEY = "AIzaSyDNDY0IIRidvGCnSR-ZOFYmqG-26KmN_54";
-
-// Set a different random description each time
+// === Hero Description Rotator ===
 const descriptions = [
+  "A passionate electronics and tech enthusiast.",
   "I'm an electronics engineer who loves AI, coding, and coffee.",
-  "I'm a creative mind blending circuits with software.",
+  "A creative mind blending circuits with software.",
   "A passionate builder of intelligent tech.",
   "Explorer of ideas through electronics, code, and art.",
   "Just a tech girl with a dream to build something big."
 ];
 
-const myDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
-
-// === Hero Description Rotator ===
 let currentDescriptionIndex = 0;
 const heroDescription = document.querySelector('.hero-description');
 
 function rotateHeroDescription() {
   if (heroDescription) {
-    // Fade out
     heroDescription.style.opacity = '0';
     heroDescription.style.transform = 'translateY(10px)';
     
     setTimeout(() => {
-      // Change text
       heroDescription.textContent = descriptions[currentDescriptionIndex];
       currentDescriptionIndex = (currentDescriptionIndex + 1) % descriptions.length;
-      
-      // Fade in
       heroDescription.style.opacity = '1';
       heroDescription.style.transform = 'translateY(0)';
     }, 500);
   }
 }
 
-// Start rotating descriptions every 4 seconds
 setInterval(rotateHeroDescription, 4000);
+rotateHeroDescription(); // Initial call
 
+// === Chat Logic (Fake Responses - Safe & Reliable) ===
 const chatOverlay = document.getElementById("chatOverlay");
 const chatMessages = document.getElementById("chatMessages");
 const userInput = document.getElementById("userInput");
 
-// === Chat Logic ===
+const fakeReplies = [
+  "Hi! I'm Anvesha's AI assistant. Ask me about her projects or skills! 🚀",
+  "Anvesha is passionate about IoT, AI, and embedded systems. Check out her AquaSense and MAITRI projects!",
+  "She loves blending hardware with software — from circuits to machine learning models.",
+  "Her skills include Electronics (85%), AI/ML (80%), Python/JS (90%), and Embedded Systems (88%).",
+  "Fun fact: Anvesha believes technology should feel magical! ✨",
+  "She's always experimenting and dreaming big — one line of code and one circuit at a time.",
+  "Want to know more? Just ask! 😊"
+];
+
 function toggleChat() {
   chatOverlay.classList.toggle("hidden");
 
   const hasInit = [...chatMessages.children].some(msg => msg.textContent.includes("Hi, I am"));
   if (!hasInit) {
-    appendMessage("bot", `Hi, I am ${myFullName}, what do you want to know about me?`);
+    appendMessage("bot", `Hi, I am ${"Anvesha"}'s AI assistant. What would you like to know? 💬`);
   }
 }
 
@@ -65,7 +64,12 @@ function sendMessage() {
   userInput.value = "";
 
   appendTyping();
-  getGeminiResponse(msg);
+
+  setTimeout(() => {
+    removeTyping();
+    const randomReply = fakeReplies[Math.floor(Math.random() * fakeReplies.length)];
+    appendMessage("bot", randomReply);
+  }, 1000 + Math.random() * 1000); // Natural delay
 }
 
 function appendMessage(sender, text) {
@@ -91,60 +95,7 @@ function removeTyping() {
   if (typing) typing.remove();
 }
 
-async function getGeminiResponse(message) {
-  const payload = {
-  contents: [
-    {
-      role: "user",
-      parts: [{ text: message }]
-    },
-    {
-      role: "system",
-      parts: [{
-        text: `Reply like you're Anvesha. Respond in short, friendly sentences. Use this info if helpful: ${myDescription}`
-      }]
-    }
-  ]
-};
-
-try {
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
-
-  const data = await res.json();
-  console.log("Gemini response:", data);
-
-  const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (reply) {
-    appendMessage("bot", reply);
-  } else {
-    appendMessage("bot", "Hmm, I didn't get that. Try asking again?");
-  }
-} catch (error) {
-  appendMessage("bot", "Oops! Something went wrong.");
-  console.error("Gemini error:", error);
-}
-}
-function showTyping() {
-  const typing = document.createElement("div");
-  typing.className = "chat-message bot typing";
-  typing.id = "typingIndicator";
-  typing.textContent = "Typing...";
-  chatMessages.appendChild(typing);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function removeTyping() {
-  const typing = document.getElementById("typingIndicator");
-  if (typing) typing.remove();
-}
-
-// Custom live cursor like Formula 1 car
+// === Custom F1 Car Cursor with Smoke ===
 if (!document.getElementById('custom-cursor')) {
   let prevX = 0;
   let prevY = 0;
@@ -159,7 +110,6 @@ if (!document.getElementById('custom-cursor')) {
   document.body.appendChild(cursor);
 
   function updateCursor() {
-    // Smooth interpolation (lerp) - adjust 0.1 for speed (lower = slower)
     currentX += (targetX - currentX) * 0.1;
     currentY += (targetY - currentY) * 0.1;
 
@@ -171,15 +121,14 @@ if (!document.getElementById('custom-cursor')) {
     cursor.style.top = currentY + 'px';
     cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     
-    // Create smoke particle at car's position every few frames
     smokeCounter++;
-    if (smokeCounter >= 5) { // Create smoke every 5 frames
+    if (smokeCounter >= 5) {
       const smoke = document.createElement('div');
       smoke.className = 'smoke';
-      smoke.style.left = (currentX - 5) + 'px'; // offset a bit
+      smoke.style.left = (currentX - 5) + 'px';
       smoke.style.top = (currentY - 5) + 'px';
       document.body.appendChild(smoke);
-      setTimeout(() => smoke.remove(), 1000); // remove after animation
+      setTimeout(() => smoke.remove(), 1000);
       smokeCounter = 0;
     }
     
@@ -189,7 +138,7 @@ if (!document.getElementById('custom-cursor')) {
     requestAnimationFrame(updateCursor);
   }
   
-  updateCursor(); // Start the animation loop
+  updateCursor();
 
   document.addEventListener('mousemove', (e) => {
     targetX = e.clientX;
@@ -197,18 +146,10 @@ if (!document.getElementById('custom-cursor')) {
   });
 }
 
-// Animate skill bars on load
-const bars = document.querySelectorAll('.bar');
-bars.forEach(bar => {
-  const targetWidth = bar.style.width;
-  bar.style.width = '0%';
-  setTimeout(() => {
-    bar.style.width = targetWidth;
-  }, 500);
-});
-
+// === Scroll Animations & Active Nav Highlight ===
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-links a');
+
 const observer = new IntersectionObserver((entries) => {
   let hasIntersecting = false;
   entries.forEach(entry => {
@@ -216,28 +157,27 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.classList.add('visible');
       hasIntersecting = true;
 
-      // Update active navigation link
-      const currentSectionId = entry.target.id;
+      const currentId = entry.target.id;
       navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentSectionId}`) {
+        if (link.getAttribute('href') === `#${currentId}`) {
           link.classList.add('active');
         }
       });
     }
   });
 
-  // If no section is intersecting (at top of page), remove all active classes
   if (!hasIntersecting) {
     navLinks.forEach(link => link.classList.remove('active'));
   }
-}, { threshold: 0.1 });
+}, { threshold: 0.2 });
+
 sections.forEach(section => observer.observe(section));
 
+// === Particle Background ===
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
-let mouse = { x: null, y: null };
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -264,25 +204,26 @@ class Particle {
   }
 }
 
-function init() {
+function initParticles() {
   particles = [];
-  for (let i = 0; i < 150; i++) particles.push(new Particle());
+  const count = window.innerWidth < 768 ? 80 : 150;
+  for (let i = 0; i < count; i++) particles.push(new Particle());
 }
 
-function animate() {
+function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => {
     p.update();
     p.draw();
   });
   connectParticles();
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateParticles);
 }
 
 function connectParticles() {
   for (let a = 0; a < particles.length; a++) {
-    for (let b = a; b < particles.length; b++) {
-      let distance = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
+    for (let b = a + 1; b < particles.length; b++) {
+      const distance = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
       if (distance < 100) {
         ctx.strokeStyle = `rgba(30, 90, 92, ${1 - distance / 100})`;
         ctx.lineWidth = 1;
@@ -295,23 +236,47 @@ function connectParticles() {
   }
 }
 
-window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); });
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  initParticles();
+});
 
-init();
-animate();
+initParticles();
+animateParticles();
 
-// === Project Card Mouse Tilt Effect ===
+// === Project & Achievement Card Tilt Effect ===
 document.querySelectorAll('.project-card, .achievement-card').forEach(card => {
   card.addEventListener('mousemove', e => {
-    let rect = card.getBoundingClientRect();
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-    let rotateY = (x / rect.width - 0.5) * 20;
-    let rotateX = (0.5 - y / rect.height) * 20;
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateY = (x / rect.width - 0.5) * 20;
+    const rotateX = (0.5 - y / rect.height) * 20;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
   });
   card.addEventListener('mouseleave', () => {
-    card.style.transform = 'rotateX(0) rotateY(0)';
+    card.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
   });
 });
+
+// === Holographic Skills Animation on Hover ===
+const holographicSkills = document.getElementById('holographic-skills');
+if (holographicSkills) {
+  const skillItems = document.querySelectorAll('.skill-holo');
+  
+  skillItems.forEach(skill => {
+    const fill = skill.querySelector('.holo-fill');
+    const level = skill.getAttribute('data-level');
+
+    // Reset on leave
+    holographicSkills.addEventListener('mouseleave', () => {
+      fill.style.width = '0%';
+    });
+
+    // Animate on enter
+    holographicSkills.addEventListener('mouseenter', () => {
+      fill.style.width = level + '%';
+    });
+  });
+}
