@@ -1,18 +1,43 @@
 // === Gemini Chatbot Script with Typing Animation and Dynamic Description ===
 
 const myFullName = "Anvesha";
-const GEMINI_API_KEY = "AIzaSyBMLbT3eQMbc5eyf6-5WotP68xu5X9-3q8";
+const GEMINI_API_KEY = "AIzaSyDNDY0IIRidvGCnSR-ZOFYmqG-26KmN_54";
 
 // Set a different random description each time
 const descriptions = [
   "I'm an electronics engineer who loves AI, coding, and coffee.",
   "I'm a creative mind blending circuits with software.",
-  "A passionate builder of embedded systems and intelligent tech.",
+  "A passionate builder of intelligent tech.",
   "Explorer of ideas through electronics, code, and art.",
   "Just a tech girl with a dream to build something big."
 ];
 
 const myDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+
+// === Hero Description Rotator ===
+let currentDescriptionIndex = 0;
+const heroDescription = document.querySelector('.hero-description');
+
+function rotateHeroDescription() {
+  if (heroDescription) {
+    // Fade out
+    heroDescription.style.opacity = '0';
+    heroDescription.style.transform = 'translateY(10px)';
+    
+    setTimeout(() => {
+      // Change text
+      heroDescription.textContent = descriptions[currentDescriptionIndex];
+      currentDescriptionIndex = (currentDescriptionIndex + 1) % descriptions.length;
+      
+      // Fade in
+      heroDescription.style.opacity = '1';
+      heroDescription.style.transform = 'translateY(0)';
+    }, 500);
+  }
+}
+
+// Start rotating descriptions every 4 seconds
+setInterval(rotateHeroDescription, 4000);
 
 const chatOverlay = document.getElementById("chatOverlay");
 const chatMessages = document.getElementById("chatMessages");
@@ -98,7 +123,7 @@ try {
   if (reply) {
     appendMessage("bot", reply);
   } else {
-    appendMessage("bot", "Hmm, I didn’t get that. Try asking again?");
+    appendMessage("bot", "Hmm, I didn't get that. Try asking again?");
   }
 } catch (error) {
   appendMessage("bot", "Oops! Something went wrong.");
