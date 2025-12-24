@@ -277,7 +277,7 @@ init();
 animate();
 
 // === Project Card Mouse Tilt Effect ===
-document.querySelectorAll('.project-card').forEach(card => {
+document.querySelectorAll('.project-card, .achievement-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     let rect = card.getBoundingClientRect();
     let x = e.clientX - rect.left;
