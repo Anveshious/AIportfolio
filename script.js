@@ -153,6 +153,18 @@ if (!document.getElementById('custom-cursor')) {
   });
 }
 
+// === Skill Bars Animation ===
+window.addEventListener('load', () => {
+  const skillBars = document.querySelectorAll('.skill-bar');
+  skillBars.forEach((bar, index) => {
+    const percentage = bar.dataset.percentage;
+    setTimeout(() => {
+      bar.style.setProperty('--percentage', percentage + '%');
+      bar.classList.add('animate');
+    }, index * 200);
+  });
+});
+
 // === Scroll Animations & Active Nav Highlight ===
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-links a');
@@ -266,40 +278,3 @@ document.querySelectorAll('.project-card, .achievement-card').forEach(card => {
     card.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
   });
 });
-
-// === Segmented Loading Bar Skills Animation on Hover ===
-const holographicSkills = document.getElementById('holographic-skills');
-if (holographicSkills) {
-  const skillRows = document.querySelectorAll('.skill-row');
-  const TOTAL_BOXES = 10;
-
-  skillRows.forEach(row => {
-    const container = row.querySelector('.boxes-container');
-    const level = parseInt(row.getAttribute('data-level'));
-    const filledCount = Math.round((level / 100) * TOTAL_BOXES);
-
-    for (let i = 0; i < TOTAL_BOXES; i++) {
-      const box = document.createElement('div');
-      box.classList.add('skill-box-unit');
-      box.dataset.index = i;
-      box.dataset.filled = i < filledCount;
-      container.appendChild(box);
-    }
-  });
-
-  holographicSkills.addEventListener('mouseenter', () => {
-    document.querySelectorAll('.skill-box-unit').forEach(box => {
-      if (box.dataset.filled === 'true') {
-        setTimeout(() => {
-          box.classList.add('filled');
-        }, parseInt(box.dataset.index) * 80); // Faster, smoother sequential fill
-      }
-    });
-  });
-
-  holographicSkills.addEventListener('mouseleave', () => {
-    document.querySelectorAll('.skill-box-unit.filled').forEach(box => {
-      box.classList.remove('filled');
-    });
-  });
-}
