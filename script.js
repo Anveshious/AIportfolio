@@ -108,6 +108,10 @@ if (!document.getElementById('custom-cursor')) {
   const cursor = document.createElement('div');
   cursor.id = 'custom-cursor';
   document.body.appendChild(cursor);
+/*
+  const flag = document.createElement('div');
+  flag.id = 'flag';
+  document.body.appendChild(flag);*/
 
   function updateCursor() {
     currentX += (targetX - currentX) * 0.1;
@@ -120,6 +124,9 @@ if (!document.getElementById('custom-cursor')) {
     cursor.style.left = currentX + 'px';
     cursor.style.top = currentY + 'px';
     cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+    
+    //flag.style.left = currentX + 'px';
+    //flag.style.top = currentY + 'px';
     
     smokeCounter++;
     if (smokeCounter >= 5) {
@@ -260,23 +267,39 @@ document.querySelectorAll('.project-card, .achievement-card').forEach(card => {
   });
 });
 
-// === Holographic Skills Animation on Hover ===
+// === Segmented Loading Bar Skills Animation on Hover ===
 const holographicSkills = document.getElementById('holographic-skills');
 if (holographicSkills) {
-  const skillItems = document.querySelectorAll('.skill-holo');
-  
-  skillItems.forEach(skill => {
-    const fill = skill.querySelector('.holo-fill');
-    const level = skill.getAttribute('data-level');
+  const skillRows = document.querySelectorAll('.skill-row');
+  const TOTAL_BOXES = 10;
 
-    // Reset on leave
-    holographicSkills.addEventListener('mouseleave', () => {
-      fill.style.width = '0%';
+  skillRows.forEach(row => {
+    const container = row.querySelector('.boxes-container');
+    const level = parseInt(row.getAttribute('data-level'));
+    const filledCount = Math.round((level / 100) * TOTAL_BOXES);
+
+    for (let i = 0; i < TOTAL_BOXES; i++) {
+      const box = document.createElement('div');
+      box.classList.add('skill-box-unit');
+      box.dataset.index = i;
+      box.dataset.filled = i < filledCount;
+      container.appendChild(box);
+    }
+  });
+
+  holographicSkills.addEventListener('mouseenter', () => {
+    document.querySelectorAll('.skill-box-unit').forEach(box => {
+      if (box.dataset.filled === 'true') {
+        setTimeout(() => {
+          box.classList.add('filled');
+        }, parseInt(box.dataset.index) * 80); // Faster, smoother sequential fill
+      }
     });
+  });
 
-    // Animate on enter
-    holographicSkills.addEventListener('mouseenter', () => {
-      fill.style.width = level + '%';
+  holographicSkills.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.skill-box-unit.filled').forEach(box => {
+      box.classList.remove('filled');
     });
   });
 }
