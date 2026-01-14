@@ -35,7 +35,7 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   transition: background 0.4s, color 0.4s;
-  cursor: none !important;
+  /*cursor: none !important;*/
 }
 
 header {
@@ -807,16 +807,18 @@ section {
 
 .skill-row {
   margin-bottom: 2.5rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.skill-row span {
-  display: block;
+.skill-name {
+  flex: 0 0 200px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #b0d9db;
-  margin-bottom: 1rem;
   text-shadow: 0 0 8px rgba(30, 90, 92, 0.5);
+  text-align: left;
 }
 
 .boxes-container {
@@ -827,7 +829,7 @@ section {
 }
 
 .skill-bar {
-  width: 100%;
+  flex: 1;
   height: 20px;
   background: rgba(26, 26, 26, 0.8);
   border-radius: 10px;
@@ -853,8 +855,13 @@ section {
   width: var(--percentage);
 }
 
-* {
-  cursor: url('f1-car.png'), auto;
+.skill-percentage {
+  flex: 0 0 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #b0d9db;
+  text-shadow: 0 0 8px rgba(30, 90, 92, 0.5);
+  text-align: right;
 }
 
 section {
@@ -886,5 +893,25 @@ section.visible {
   }
   100% {
     background-position: 0% 0%;
+  }
+}
+
+/* Mobile responsiveness for skill bars */
+@media (max-width: 768px) {
+  .skill-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .skill-name {
+    flex: none;
+    text-align: left;
+  }
+  .skill-bar {
+    width: 100%;
+  }
+  .skill-percentage {
+    align-self: flex-end;
+    text-align: right;
   }
 }
